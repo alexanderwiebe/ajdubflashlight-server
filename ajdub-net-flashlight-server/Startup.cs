@@ -33,11 +33,8 @@ namespace EchoApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(LogLevel.Debug);
-            loggerFactory.AddDebug(LogLevel.Debug);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -66,8 +63,9 @@ namespace EchoApp
                     if (context.WebSockets.IsWebSocketRequest)
                     {
                         WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        //await Echo(context, webSocket);
-                        await Word(context, webSocket);
+                        // await Echo(context, webSocket);
+                        // await Word(context, webSocket);
+                        await PushWord(context, webSocket);
                     }
                     else
                     {
@@ -130,6 +128,6 @@ namespace EchoApp
                 Thread.Sleep(2000);
             }
             //await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-        }
+        }   
     }
 }
